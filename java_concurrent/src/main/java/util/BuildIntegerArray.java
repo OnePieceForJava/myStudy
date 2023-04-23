@@ -1,8 +1,5 @@
 package util;
 
-import sun.java2d.pipe.SpanIterator;
-
-import java.sql.SQLOutput;
 import java.util.Random;
 
 public class BuildIntegerArray {

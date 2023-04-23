@@ -1,10 +1,6 @@
 package util.blockingqueue;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.SortingIterator;
-import sun.security.provider.ConfigFile;
-
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class BlockingQueueAPI {
 
