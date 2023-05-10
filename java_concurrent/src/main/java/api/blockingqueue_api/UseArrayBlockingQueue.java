@@ -1,7 +1,5 @@
 package api.blockingqueue_api;
 
-import com.sun.media.sound.SoftTuning;
-
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
