@@ -1,6 +1,6 @@
-package basic;
+package api.thread_api;
 
-public class ThreadInterrupt {
+public class UseInterrupt {
 
     public static void main(String[] args) {
         testSleepInterrupted();

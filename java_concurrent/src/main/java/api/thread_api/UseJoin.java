@@ -1,6 +1,6 @@
-package basic;
+package api.thread_api;
 
-public class ThreadJoin {
+public class UseJoin {
     public static void main(String[] args) throws InterruptedException {
         testThreadJoin();
     }

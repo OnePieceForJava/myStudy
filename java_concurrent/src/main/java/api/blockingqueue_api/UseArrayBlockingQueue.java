@@ -1,19 +1,19 @@
-package util.blockingqueue;
+package api.blockingqueue_api;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class BlockingQueueAPI {
+public class UseArrayBlockingQueue {
 
 
     public static void main(String[] args) {
         //test1();
-        //testAdd();
+        useAdd();
         //testOffer();
         //testRemove();
         //testPoll();
         //testElementAndPeek();
         //testPut();
-        testTake();
+        //testTake();
         //LinkedBlockingQueue
     }
 
@@ -32,7 +32,8 @@ public class BlockingQueueAPI {
     }
 
 
-    private static void testAdd(){
+    //@Test
+    public static void useAdd(){
         ArrayBlockingQueue<Integer> arrayBlockingQueue = new ArrayBlockingQueue<>(3);
         arrayBlockingQueue.add(1);
         arrayBlockingQueue.add(2);
