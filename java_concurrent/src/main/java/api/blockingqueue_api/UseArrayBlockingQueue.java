@@ -18,6 +18,8 @@ public class UseArrayBlockingQueue {
         //usePoll();
         //useTake();
         //usePollTimeUnit();
+
+        /*查询队列首个元素*/
         useElementAndPeek();
     }
 
