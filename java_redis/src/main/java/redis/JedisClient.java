@@ -17,13 +17,13 @@ public class JedisClient {
     private static BufferedReader READER;
     private static BufferedReader KEYBOARD_INPUT;
 
-    private static final String INFO = "127.0.0.1:6379> ";
+    private static final String INFO = "192.168.42.111:6379> ";
 
     public static void main(String[] args) throws Exception {
         try {
             //建立连接
             //虚拟机IP地址：192.168.29.128
-            socket = new Socket("192.168.29.128", 6379);
+            socket = new Socket("192.168.42.111", 6379);
             //获取输入流、输出流
             WRITER = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "utf-8"));
             READER = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
