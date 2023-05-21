@@ -16,6 +16,13 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -24,29 +31,11 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <!--<dataSource type="com.wyl.utils.DruidDataSourceFactory">
-            <property name="driver" value="${driver}"/>
-            <property name="url" value="${url}"/>
-            <property name="username" value="${username}"/>
-            <property name="password" value="${password}"/>
-        </dataSource>-->
-
-        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.2.5</version>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>compile</scope>
-        </dependency>
+
     </dependencies>
 
 </project>
