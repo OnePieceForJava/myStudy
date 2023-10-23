@@ -1,46 +1,60 @@
 package zk.client;
 
-import org.apache.zookeeper.*;
-import org.apache.zookeeper.data.ACL;
-import org.apache.zookeeper.data.Stat;
-
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.Watcher.Event.EventType;
+import org.apache.zookeeper.Watcher.Event.KeeperState;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.Stat;
 
 /**
  * Znode节点的增删改查操作
  */
 public class ZnodeCRUD {
     private ZooKeeper zooKeeper = null;
-    private CountDownLatch countDownLatch = new CountDownLatch(1);
     private Watcher watcher = null;
+    private CountDownLatch countDownLatch = new CountDownLatch(1);
 
-    public ZnodeCRUD() {
-        this.watcher = new Watcher() {
-            @Override
-            public void process(WatchedEvent event) {
-                Event.EventType eventType = event.getType();
-                Event.KeeperState state = event.getState();
-                if (Event.KeeperState.SyncConnected.equals(state)) {
-                    countDownLatch.countDown();
-                    System.out.println("zooKeeper Session state" + zooKeeper.getState());
-                }
-            }
-        };
-        System.out.println("Watcher 初始化完成...");
+    public static void main(String[] args) {
+        ZnodeCRUD znodeCRUD = new ZnodeCRUD();
+        znodeCRUD.connect();
+        try {
+            System.out.println(
+                "create() start------------------------------------------------------------------------");
+            String path = "/zk_crud";
+            znodeCRUD.create(path, "我是节点初始内容", ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            System.out.println("create() end------------------------------------------------------------------------");
+
+            znodeCRUD.get(path);
+
+            znodeCRUD.set(path, "我是变更后的节点信息");
+
+            znodeCRUD.create(path + "/child", "我是/zk_crud节点的子节点", ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+
+            znodeCRUD.delete(path);
+
+        } finally {
+            znodeCRUD.releaseConnect();
+        }
     }
-
 
     /**
      *
      */
     public void connect() {
         try {
-            if(zooKeeper == null ){
+            if (zooKeeper == null) {
                 zooKeeper = new ZooKeeper("127.0.0.1:2181", 1000, this.watcher);
                 countDownLatch.await();
-            }else {
+            } else {
 
             }
 
@@ -49,15 +63,14 @@ public class ZnodeCRUD {
         }
     }
 
-
     public void tryConnect() {
         try {
-            if(zooKeeper == null ){
+            if (zooKeeper == null) {
                 zooKeeper = new ZooKeeper("127.0.0.1:2181", 1000, this.watcher);
                 countDownLatch.await();
-            }else {
+            } else {
                 ZooKeeper.States states = zooKeeper.getState();
-                if(!ZooKeeper.States.CONNECTED.equals(states)){
+                if (!ZooKeeper.States.CONNECTED.equals(states)) {
 
                 }
             }
@@ -66,9 +79,6 @@ public class ZnodeCRUD {
             e.printStackTrace();
         }
     }
-
-
-
 
     public void releaseConnect() {
         if (zooKeeper != null) {
@@ -94,7 +104,6 @@ public class ZnodeCRUD {
             e.printStackTrace();
         }
     }
-
 
     public void get(String path) {
         Stat stat = new Stat();
@@ -124,7 +133,6 @@ public class ZnodeCRUD {
         }
     }
 
-
     public void delete(String path) {
         try {
             zooKeeper.delete(path, -1);
@@ -136,31 +144,15 @@ public class ZnodeCRUD {
         }
     }
 
-
-    public static void main(String[] args) {
-        ZnodeCRUD znodeCRUD = new ZnodeCRUD();
-        znodeCRUD.connect();
-        try {
-
-            System.out.println("create() start------------------------------------------------------------------------");
-            String path = "/zk_crud";
-            znodeCRUD.create(path, "我是节点初始内容", ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-            System.out.println("create() end------------------------------------------------------------------------");
-
-            znodeCRUD.get(path);
-
-            znodeCRUD.set(path, "我是变更后的节点信息");
-
-            znodeCRUD.create(path+"/child", "我是/zk_crud节点的子节点", ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-
-            znodeCRUD.delete(path);
-
-
-
-
-
-        } finally {
-            znodeCRUD.releaseConnect();
+    class MyWatcher implements Watcher {
+        @Override
+        public void process(WatchedEvent event) {
+            EventType eventType = event.getType();
+            KeeperState keeperState = event.getState();
+            if ((EventType.None.equals(eventType.getIntValue())) && (KeeperState.SyncConnected.equals(
+                keeperState.getIntValue()))) {
+                countDownLatch.countDown();
+            }
         }
     }
 }

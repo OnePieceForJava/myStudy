@@ -1,9 +1,14 @@
 package zk.client;
 
-import org.apache.zookeeper.*;
-
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
+
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
 
 /**
  * Created by VULCAN on 2018/11/7.
@@ -17,10 +22,6 @@ public class TestJavaApi implements Watcher {
 
 
     private CountDownLatch countDownLatch = new CountDownLatch(1);
-
-
-
-
     /**
      * 创建ZK连接
      *

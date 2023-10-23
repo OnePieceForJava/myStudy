@@ -18,13 +18,13 @@ public class $capacity {
 
     @Test
     public void capacity1() {
-        byte[] byteArray = new byte[]{1, 2, 3};
-        short[] shortArray = new short[]{1, 2, 3, 4};
-        int[] intArray = new int[]{1, 2, 3, 4, 5};
-        long[] longArray = new long[]{1, 2, 3, 4, 5, 6};
-        float[] floatArray = new float[]{1, 2, 3, 4, 5, 6, 7};
-        double[] doubleArray = new double[]{1, 2, 3, 4, 5, 6, 7, 8};
-        char[] charArray = new char[]{'a', 'b', 'c', 'd'};
+        byte[] byteArray = new byte[] {1, 2, 3};
+        short[] shortArray = new short[] {1, 2, 3, 4};
+        int[] intArray = new int[] {1, 2, 3, 4, 5};
+        long[] longArray = new long[] {1, 2, 3, 4, 5, 6};
+        float[] floatArray = new float[] {1, 2, 3, 4, 5, 6, 7};
+        double[] doubleArray = new double[] {1, 2, 3, 4, 5, 6, 7, 8};
+        char[] charArray = new char[] {'a', 'b', 'c', 'd'};
 
         ByteBuffer bytebuffer = ByteBuffer.wrap(byteArray);
         ShortBuffer shortBuffer = ShortBuffer.wrap(shortArray);
@@ -52,7 +52,6 @@ public class $capacity {
         System.out.println("doubleBuffer.capacity=" + doubleBuffer.capacity());
         System.out.println("charBuffer.capacity=" + charBuffer.capacity());
     }
-
 
     @Test
     public void capacity2() {

@@ -1,16 +1,22 @@
 package zk.client;
 
-import org.apache.zookeeper.*;
-import org.junit.Test;
-
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
+
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
+import org.junit.Test;
 
 public class TestCreateSession {
 
     private static String ZOOKEEPER_IP = "127.0.0.1:2181";
 
     private static int SESSION_TIME_OUT = 30000;
+    private static CountDownLatch countDownLatch = new CountDownLatch(1);
 
     @Test
     public void testCreateSession() throws InterruptedException {
@@ -18,7 +24,8 @@ public class TestCreateSession {
             ZooKeeper zooKeeper = new ZooKeeper(ZOOKEEPER_IP, SESSION_TIME_OUT, null);
             System.out.println(zooKeeper);
             System.out.println("zookeeper state:" + zooKeeper.getState());
-            //State:CONNECTING sessionid:0x0 local:null remoteserver:null lastZxid:0 xid:1 sent:0 recv:0 queuedpkts:0 pendingresp:0 queuedevents:0
+            //State:CONNECTING sessionid:0x0 local:null remoteserver:null lastZxid:0 xid:1 sent:0 recv:0 queuedpkts:0
+            // pendingresp:0 queuedevents:0
             //zookeeper state:CONNECTING
             Thread.sleep(10000);
             System.out.println("sleep 10s ,zookeeper state:" + zooKeeper.getState());
@@ -27,11 +34,7 @@ public class TestCreateSession {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
-    private static CountDownLatch countDownLatch = new CountDownLatch(1);
 
     @Test
     public void testCreateConnectedSession() throws InterruptedException {
@@ -49,11 +52,9 @@ public class TestCreateSession {
             //等待Session的状态由 CONNECTING 变成 CONNECTED
             countDownLatch.await();
             System.out.println(zooKeeper.getState());
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 
@@ -63,9 +64,11 @@ public class TestCreateSession {
             ZooKeeper zooKeeper = new ZooKeeper(ZOOKEEPER_IP, SESSION_TIME_OUT, null);
             System.out.println(zooKeeper);
             System.out.println("zookeeper state:" + zooKeeper.getState());
-            //State:CONNECTING sessionid:0x0 local:null remoteserver:null lastZxid:0 xid:1 sent:0 recv:0 queuedpkts:0 pendingresp:0 queuedevents:0
+            //State:CONNECTING sessionid:0x0 local:null remoteserver:null lastZxid:0 xid:1 sent:0 recv:0 queuedpkts:0
+            // pendingresp:0 queuedevents:0
             //zookeeper state:CONNECTING
-            System.out.println(zooKeeper.create("/java_zookeeper", "dataValue".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT));
+            System.out.println(zooKeeper
+                .create("/java_zookeeper", "dataValue".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (KeeperException e) {

@@ -8,12 +8,16 @@ import java.nio.CharBuffer;
  * limit():int
  * limit(int):Buffer
  * 第一个不应该读取或写入元素的index（索引）
+ * <p>
+ * 限制（limit）代表第一个不应该读取或写入元素的index，
+ * 缓冲区的limit不能为负，并且limit不能大于其capacity
+ * limit ∈ (0,capacity)
  */
-public class $limit {
+public class $Limit {
 
     @Test
     public void limit1() {
-        char[] charArray = new char[]{'a', 'b', 'c', 'd', 'e'};
+        char[] charArray = new char[] {'a', 'b', 'c', 'd', 'e'};
         CharBuffer buffer = CharBuffer.wrap(charArray);
         System.out.println("-----------------------------------");
         System.out.println("wrap初始化时,mark = -1");
