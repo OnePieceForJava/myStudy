@@ -1,0 +1,33 @@
+什么是动态代理
+在Java中，动态代理是一种机制，它允许程序在运行时动态地生成代理类，
+从而可以在不修改源代码的情况下，为原有的类提供额外的功能或者控制访问。
+
+
+
+动态代理主要通过反射机制来实现，其基本原理是：在运行时创建一个实现了指定接口的代理类对象，
+然后将请求转发给实际的目标对象，并在转发过程中执行额外的操作。
+由于动态代理可以在运行时生成代理类，因此它比静态代理更加灵活和易于扩展，常用于实现各种框架、AOP等技术。
+
+
+
+如何实现动态代理
+java.lang.reflect.Proxy
+java.lang.reflect.InvocationHandler
+
+在Java中，动态代理主要通过java.lang.reflect包中的Proxy和InvocationHandler接口来实现。
+具体来说，代理对象是通过Proxy类的静态方法newProxyInstance来创建的，该方法接受三个参数：类加载器、要实现的接口数组和InvocationHandler对象。InvocationHandler是一个接口，它定义了一个invoke方法，用于在代理对象上执行方法调用时进行处理。
+
+
+
+Proxy.newProxyInstance()方法生成代理对象
+
+--> 生成class文件格式的字符数组
+byte[] proxyClassFile = ProxyGenerator.generateProxyClass(
+                proxyName, interfaces, accessFlags);
+--> 通过这个native的方法将刚才生成的class文件加载到虚拟机当中
+private static native Class<?> defineClass0(ClassLoader loader, String name,
+                                                byte[] b, int off, int len);
+
+--> 提出问题
+现在不用我自己生成class文件，可以从数据库中就能获取到对应的class文件格式的数据。
+我刚怎么将这个文件加载到虚拟机中并供自己使用
